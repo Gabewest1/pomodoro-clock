@@ -4,7 +4,7 @@ import formatTime from "./formatTime"
 const $timer = document.querySelector(".timer")
 const $loadingBar = document.querySelector(".loading-bar")
 const start = Date.now()
-const STARTING_TIME = 5;
+const STARTING_TIME = 2500      //In seconds
 
 let tick = setInterval(() => {
     let timeElapsed = Math.round((Date.now() - start) / 1000)

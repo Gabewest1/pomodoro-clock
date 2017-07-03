@@ -4,26 +4,21 @@
 export default (time) => {
     console.log("INTIAL_TIME:", time)
 
-    let hours, minutes, seconds = 0
+    let hours = 0
+    let minutes = 0 
+    let seconds = 0
 
     while(time > 0) {
         console.log("time:", time)
-        switch(time) {
-            case time > 3600: {
-                hours++
-                time -= 3600
-                break
-            }
-            case time > 60: {
-                minutes++
-                time -= 60
-                break
-            }
-            default: {
-                seconds += time
-                time = 0
-                break
-            }
+        if(time >= 3600) {
+            hours++
+            time -= 3600
+        } else if(time >= 60) {
+            minutes++
+            time -= 60
+        } else {
+            seconds += time
+            time = 0
         }
     }
 
