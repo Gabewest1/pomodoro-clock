@@ -1,16 +1,24 @@
 class Timer {
     constructor(timer, loadingBar) {
         this.timer = timer
-        this.STARTING_TIME = 66
+        this.workTime = 66
+        this.breakTime = 300
         this.setInterval = undefined
         this.loadingBar = loadingBar
+        this.isPaused = false
+        this.startingTime = 0
     }
     startTimer() {
-        const start = Date.now()
+        this.startingTime = Date.now()
 
         this.setInterval = setInterval(() => {
-            let timeElapsed = Math.round((Date.now() - start) / 1000)
-            let percentFinished = (timeElapsed / this.STARTING_TIME) * 100
+            if(this.isPaused) {
+                this.startingTime += 1000
+                return
+            }
+
+            let timeElapsed = Math.round((Date.now() - this.startingTime) / 1000)
+            let percentFinished = (timeElapsed / this.workTime) * 100
 
             if(percentFinished > 100) {
                 percentFinished = 100
@@ -18,12 +26,15 @@ class Timer {
                 this.setInterval = undefined
             }
 
-            let timeRemaining = this.STARTING_TIME - timeElapsed
+            let timeRemaining = this.workTime - timeElapsed
             let formattedTimeRemaining = formatTime(timeRemaining)
-            
+
             this.timer.textContent = formattedTimeRemaining
-            this.loadingBar.style.width = `${percentFinished}%`
+            // this.loadingBar.style.width = `${percentFinished}%`
         }, 1000)
+    }
+    pauseTimer() {
+        this.isPaused = !this.isPaused
     }
     toggleTimer() {
         if(!this.setInterval) {
