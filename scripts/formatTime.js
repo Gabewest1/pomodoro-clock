@@ -1,15 +1,10 @@
-//I'm expecting time to be in seconds
-//1)As number of seconds 12.312, 1234.23 => 
-//2)find number of hours, minutes, seconds
 export default (time) => {
-    console.log("INTIAL_TIME:", time)
 
     let hours = 0
     let minutes = 0 
     let seconds = 0
 
     while(time > 0) {
-        console.log("time:", time)
         if(time >= 3600) {
             hours++
             time -= 3600
@@ -22,7 +17,19 @@ export default (time) => {
         }
     }
 
-    let formattedTime = `${hours}:${minutes}:${seconds}`.replace(/undefined:/g, "")
-    console.log("HMS:", hours, minutes, seconds)
+    let unformattedTime = `${hours}:${minutes}:${seconds}`
+    
+    let formattedTime = unformattedTime.replace(/undefined:/g, "")
+                                        .split(":")
+                                        .reduce((time, val) => {
+                                            let isSingleDigitNumber = val.length === 1 
+                                            return isSingleDigitNumber ? time.concat(":0" + val) : time.concat(":" + val) 
+                                        }, "")
+                                        .replace(":", "")       //Their is always a ":"" in the beginning after reduce
+
+    const removeLeadingZeros = (time) => time.startsWith("00:") ? removeLeadingZeros(time.substring(3)) : time
+
+    formattedTime = removeLeadingZeros(formattedTime)
+
     return formattedTime
 }
