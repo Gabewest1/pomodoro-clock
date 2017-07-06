@@ -3,14 +3,103 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
 <body>
+    <!--<div class="clock__container">
+        <svg class="clock" height="100" width="100">
+            <circle cx="50" cy="50" r="40" stroke="black" stroke-width="3" fill="red" />
+        </svg>
+        <div >
+            <div class="timer"></div>
+        </div>
+    </div>
+    
+    
+    <div class="btn">
+        <div class="loading-bar"></div>
+        Loading
+    </div>-->
+    <div class="header">
+        <h1 class="title">Pomodoro</h1>
+    </div>
     <div class="container">
-        <div class="timer">
-            
+
+        <div class="left-panel">
+            <div class="settings">
+                <div class="settings__option">
+                    <div class="settings__work">
+                        <a href="#" class="settings__button">
+                            <div class="button__text">
+                                Work
+                            </div>
+                            <div class="arrows">
+                                <div class="arrow__wrapper">
+                                    <i class="arrow up"></i>
+                                </div>
+                                <div class="arrow__wrapper">
+                                    <i class="arrow down"></i>
+                                </div>
+                                
+                            </div>
+                        </a>
+                        <input type="text" placeholder="25" />
+                    </div>
+                </div>
+                <div class="settings__option">
+                    <a href="#" class="settings__button">
+                            <div class="button__text">
+                                Break
+                            </div>
+                            <div class="arrows">
+                                <div class="arrow__wrapper">
+                                    <i class="arrow up"></i>
+                                </div>
+                                <div class="arrow__wrapper">
+                                    <i class="arrow down"></i>
+                                </div>
+                                
+                            </div>
+                        </a>
+                    <input type="text" placeholder="5" />
+                </div>
+                <div class="settings__option">
+                    <a href="#" class="settings__button">
+                            <div class="button__text">
+                                Goal
+                            </div>
+                            <div class="arrows">
+                                <div class="arrow__wrapper">
+                                    <i class="arrow up"></i>
+                                </div>
+                                <div class="arrow__wrapper">
+                                    <i class="arrow down"></i>
+                                </div>
+                                
+                            </div>
+                        </a>
+                    <input type="text" placeholder="5" />
+                </div>
+            </div>
         </div>
-        <div class="btn">
-            <div class="loading-bar"></div>
-            Loading
+
+        <div class="right-panel">
+
+            <section class="flex">
+                <div class="clock">
+                    <div class="clock__body">
+                        <div class="clock__timer"></div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="flex--column">
+                <div class="buttons">
+                    <div class="rounds">2/5</div>
+                    <button class="button">Start</button>
+                    <button class="button">Pause</button>
+                    <button class="button">Skip break</button>
+                </div>
+            </section>
         </div>
+        
     </div>
 
     <script src="bundle.js"></script>
