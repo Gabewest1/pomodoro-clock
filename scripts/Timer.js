@@ -1,47 +1,91 @@
 class Timer {
-    constructor(timer, loadingBar) {
+    constructor(timer, loadingBar, workValue, breakValue) {
         this.timer = timer
-        this.workTime = 66
-        this.breakTime = 300
-        this.setInterval = undefined
+        this.workTime = workValue
+        this.breakTime = breakValue
+        this.timeState = this.workTime
+        this.timersSetInterval = undefined
         this.loadingBar = loadingBar
         this.isPaused = false
         this.startingTime = 0
+        this.skipBreak = false
+
+        this.setTimerHTML(this.workTime)
+    }
+    handleTimerFinished() {
+        if(this.skipBreak) {
+            this.timeState = this.workTime
+            this.skipBreak = false
+        } else if(this.timeState === this.workTime) {
+            this.timeState = this.breakTime
+        } else {
+            this.timeState = this.workTime
+        }
+
+        this.isPaused = false
+        this.setTimerHTML(this.timeState)
     }
     startTimer() {
         this.startingTime = Date.now()
 
-        this.setInterval = setInterval(() => {
+        this.timersSetInterval = setInterval(() => {
             if(this.isPaused) {
                 this.startingTime += 1000
                 return
             }
 
             let timeElapsed = Math.round((Date.now() - this.startingTime) / 1000)
-            let percentFinished = (timeElapsed / this.workTime) * 100
+            let percentFinished = (timeElapsed / this.timeState) * 100
 
             if(percentFinished > 100) {
                 percentFinished = 100
-                clearInterval(this.setInterval)
-                this.setInterval = undefined
+                clearInterval(this.timersSetInterval)
+                this.timersSetInterval = undefined
+                this.handleTimerFinished()
+            } else {
+                let timeRemaining = this.timeState - timeElapsed
+                this.setTimerHTML(timeRemaining)
             }
 
-            let timeRemaining = this.workTime - timeElapsed
-            let formattedTimeRemaining = formatTime(timeRemaining)
-
-            this.timer.textContent = formattedTimeRemaining
             // this.loadingBar.style.width = `${percentFinished}%`
         }, 1000)
     }
-    pauseTimer() {
+    togglePause() {
         this.isPaused = !this.isPaused
     }
-    toggleTimer() {
-        if(!this.setInterval) {
+    resetTimer() {
+        clearInterval(this.timersSetInterval)
+        this.timersSetInterval = undefined
+        this.isPaused = false
+        this.setTimerHTML(this.timeState)
+    }
+    setTimerHTML(time) {
+        if(time === 300) {
+            console.log("TIME:", time, formatTime(time))
+        }
+        this.timer.textContent = formatTime(time)
+    }
+    setWorkTime(time) {
+        this.workTime = time
+    }
+    setBreakTime(time) {
+        this.breakTime = time
+    }
+    handlePauseButtonClick() {
+        this.togglePause()
+    }
+    handleResetButtonClick() {
+        this.resetTimer()
+    }
+    handleSkipBreakButtonClick() {
+        this.skipBreak = !this.skipBreak
+    }
+    handleStartButtonClick() {
+        console.log("STATE:", this.timersSetInterval, this.isPaused)
+        if(!this.timersSetInterval) {
             this.startTimer()
-        } else {
-            clearInterval(this.setInterval)
-            this.setInterval = undefined
+        } else if(this.isPaused) {
+            this.togglePause()
         }
     }
 }
