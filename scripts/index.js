@@ -1,23 +1,17 @@
 import "../styles.css"
-import formatTime from "./formatTime"
+import Timer from "./Timer"
 
-const $timer = document.querySelector(".timer")
+const $timer = document.querySelector(".clock__timer")
 const $loadingBar = document.querySelector(".loading-bar")
-const start = Date.now()
-const STARTING_TIME = 2500      //In seconds
+const $startBtn = document.querySelector(".startBtn")
+const $pauseBtn = document.querySelector(".pauseBtn")
+const $skipBreakBtn = document.querySelector(".skipBtn")
 
-let tick = setInterval(() => {
-    let timeElapsed = Math.round((Date.now() - start) / 1000)
-    console.log("timeElpased: ", timeElapsed)
-    let percentFinished = (timeElapsed / STARTING_TIME) * 100
-    if(percentFinished > 100) {
-        percentFinished = 100
-        clearInterval(tick)
-    }
-    console.log("percentFinished:", percentFinished)
+const timer = new Timer($timer, $loadingBar)
+timer.startTimer()
+console.log(timer)
 
-    let timeRemaining = STARTING_TIME - timeElapsed
-    let formattedTimeRemaining = formatTime(timeRemaining)
-    $timer.textContent = formattedTimeRemaining
-    $loadingBar.style.width = `${percentFinished}%`
-}, 1000)
+$startBtn.addEventListener("click", (e) => {
+    console.log("btn clicked!")
+    timer.toggleTimer()
+})
