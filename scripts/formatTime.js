@@ -1,5 +1,7 @@
-export default (time) => {
+export default formatTime = (time) => {
 
+    time = parseInt(time)
+    
     let hours = 0
     let minutes = 0 
     let seconds = 0
@@ -19,17 +21,20 @@ export default (time) => {
 
     let unformattedTime = `${hours}:${minutes}:${seconds}`
     
-    let formattedTime = unformattedTime.replace(/undefined:/g, "")
-                                        .split(":")
-                                        .reduce((time, val) => {
-                                            let isSingleDigitNumber = val.length === 1 
-                                            return isSingleDigitNumber ? time.concat(":0" + val) : time.concat(":" + val) 
-                                        }, "")
-                                        .replace(":", "")       //Their is always a ":"" in the beginning after reduce
+    let formattedTime = unformattedTime
+                            .replace(/undefined:/g, "")
+                            .split(":")
+                            .reduce((time, val) => {
+                                let isSingleDigitNumber = val.length === 1 
+                                return isSingleDigitNumber ? time.concat(":0" + val) : time.concat(":" + val) 
+                            }, "")
+                            .replace(":", "")       //Their is always a ":"" in the beginning after reduce
 
     const removeLeadingZeros = (time) => time.startsWith("00:") ? removeLeadingZeros(time.substring(3)) : time
 
     formattedTime = removeLeadingZeros(formattedTime)
+
+    if(formattedTime.length <= 2) formattedTime = "00:"+formattedTime
 
     return formattedTime
 }
