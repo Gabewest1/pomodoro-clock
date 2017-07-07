@@ -1,4 +1,5 @@
-export default (settings) => {
+export default ({settings, timer}) => { 
+    console.log("JKLFDJS:L", settings, timer)
     const $arrowButtons = document.querySelectorAll(".arrow__wrapper")
 
     Array.from($arrowButtons).forEach(btn => btn.addEventListener("click", (e) => {
@@ -7,8 +8,12 @@ export default (settings) => {
 
         if(increaseValue) {
             settings.increment(input)
+            timer.setWorkTime()  
+            timer.setBreakTime()
         } else {
             settings.decrement(input)
+            timer.setWorkTime() 
+            timer.setBreakTime()
         }
 
         if(input.name === "goal") {

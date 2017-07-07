@@ -1,8 +1,8 @@
 class Timer {
-    constructor(timer, loadingBar, workValue, breakValue) {
+    constructor(timer, loadingBar, settings) {
         this.timer = timer
-        this.workTime = workValue
-        this.breakTime = breakValue
+        this.workTime = settings.workValue
+        this.breakTime = settings.breakValue
         this.state = "work"
         this.timeState = this.workTime
         this.timersSetInterval = undefined
@@ -10,6 +10,7 @@ class Timer {
         this.skipBreak = false
         this.percentFinished = 0
         this.startingTime = 0
+        this.settings = settings
 
         this.setTimerHTML(this.workTime)
     }
@@ -57,7 +58,6 @@ class Timer {
         this.isPaused = !this.isPaused
     }
     resetTimer() {
-        console.log("TIMESTATE:", this.timeState, this.workTime)
         clearInterval(this.timersSetInterval)
         this.timersSetInterval = undefined
         this.isPaused = false
@@ -68,15 +68,14 @@ class Timer {
         this.timer.textContent = formatTime(time)
     }
     setWorkTime(time) {
-        console.log("SETTING WORKTIME:", this.workTime, time)
-        this.workTime = time
+        this.workTime = this.settings.workValue
         if(!this.timersSetInterval && this.state === "work") {
+            console.log(this.workTime)
             this.setTimerHTML(this.workTime)
         }
     }
     setBreakTime(time) {
-        console.log("SETTING BREAKTIME:", this.breakTime, time)
-        this.breakTime = time
+        this.breakTime = this.settings.breakValue
         if(!this.timersSetInterval && this.state === "break") {
             this.setTimerHTML(this.breakTime)
         }
@@ -87,6 +86,8 @@ export default Timer
 
 const formatTime = (time) => {
 
+    time = parseInt(time)
+    
     let hours = 0
     let minutes = 0 
     let seconds = 0
@@ -106,13 +107,14 @@ const formatTime = (time) => {
 
     let unformattedTime = `${hours}:${minutes}:${seconds}`
     
-    let formattedTime = unformattedTime.replace(/undefined:/g, "")
-                                        .split(":")
-                                        .reduce((time, val) => {
-                                            let isSingleDigitNumber = val.length === 1 
-                                            return isSingleDigitNumber ? time.concat(":0" + val) : time.concat(":" + val) 
-                                        }, "")
-                                        .replace(":", "")       //Their is always a ":"" in the beginning after reduce
+    let formattedTime = unformattedTime
+                            .replace(/undefined:/g, "")
+                            .split(":")
+                            .reduce((time, val) => {
+                                let isSingleDigitNumber = val.length === 1 
+                                return isSingleDigitNumber ? time.concat(":0" + val) : time.concat(":" + val) 
+                            }, "")
+                            .replace(":", "")       //Their is always a ":"" in the beginning after reduce
 
     const removeLeadingZeros = (time) => time.startsWith("00:") ? removeLeadingZeros(time.substring(3)) : time
 

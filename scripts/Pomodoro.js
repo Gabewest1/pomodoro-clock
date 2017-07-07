@@ -2,10 +2,6 @@ export default class Pomodoro {
     constructor(timer, settings) {
         this.timer = timer
         this.settings = settings
-         
-        this.settings.workInput.addEventListener("change", (e) => this.handleSettingsChange(e))
-        this.settings.breakInput.addEventListener("change", (e) => this.handleSettingsChange(e))
-        this.settings.goalInput.addEventListener("change", (e) => this.handleSettingsChange(e))
     }
 
     handleButtonClick(e) {
@@ -33,6 +29,7 @@ export default class Pomodoro {
     }
     startTimer() {
         this.timer.startingTime = Date.now()
+        this.timer.timeState = (this.timer.state === "work") ? this.timer.workTime : this.timer.breakTime
 
         this.timer.timersSetInterval = setInterval(() => {
             if(this.timer.isPaused) {
@@ -60,7 +57,7 @@ export default class Pomodoro {
         document.querySelector(".startBtn").textContent = "Start"
         document.querySelector(".pauseBtn").textContent = "Reset"
 
-        if(this.timer.state === "break") {
+        if(this.timer.state === "break" || (this.timer.state === "work" && this.timer.skipBreak)) {
             let rounds = document.querySelector(".rounds")
             let roundsCompleted = rounds.textContent.match(/\d+\//)[0].replace("/", "")
             console.log("ROUNDS COMPLETED:", roundsCompleted + 1)
@@ -71,14 +68,14 @@ export default class Pomodoro {
     }
     handleSettingsChange(e) {
         let input = e.target
+        this.settings.handleChange(input)
         console.log("WE IN THIS HOOOE")
         if(input.name === "work") {
+            console.log("INPUT VALUE:", input.value)
             this.timer.setWorkTime(input.value)
         } else if(input.name === "break") {
             this.timer.setBreakTime(input.value)
         }
-
-        this.settings.handleChange(input)
     }
     handlePauseButtonClick() {
         this.timer.togglePause()

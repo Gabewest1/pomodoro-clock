@@ -1,13 +1,20 @@
-export default (Settings) => {
+export default (pomodoro) => {
+
     const $workInput = document.getElementsByName("work")[0]
     const $breakInput = document.getElementsByName("break")[0]
     const $goalInput = document.getElementsByName("goal")[0]
+
+    $workInput.addEventListener("change", (e) => pomodoro.handleSettingsChange(e))
+    $breakInput.addEventListener("change", (e) => pomodoro.handleSettingsChange(e))
+    $goalInput.addEventListener("change", (e) => pomodoro.handleSettingsChange(e))
 
     $workInput.onkeypress = isNumberKey
     $breakInput.onkeypress = isNumberKey
     $goalInput.onkeypress = isNumberKey
 
-    return new Settings($workInput, 5, $breakInput, 10, $goalInput, 5)
+    $workInput.value = pomodoro.settings.workValue
+    $breakInput.value = pomodoro.settings.breakValue
+    $goalInput.value = pomodoro.settings.goalValue
 }
 
 function isNumberKey(evt){

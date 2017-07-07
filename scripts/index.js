@@ -13,14 +13,16 @@ const $startBtn = document.querySelector(".startBtn")
 const $pauseBtn = document.querySelector(".pauseBtn")
 const $skipBreakBtn = document.querySelector(".skipBtn")
 
-const settings = setSettingsInputHandlers(Settings)
 
+const settings = new Settings(5, 10, 5)
+const timer = new Timer($timer, $loadingBar, settings)
+const pomodoro = new Pomodoro(timer, settings)
+
+setSettingsInputHandlers(pomodoro)
 adjustContainerHeight()
 setArrowButtonsWidth()
-setArrowButtonHandlers(settings)
+setArrowButtonHandlers(pomodoro)
 
-const timer = new Timer($timer, $loadingBar, settings.workValue, settings.breakValue)
-const pomodoro = new Pomodoro(timer, settings)
 
 const toggleButtonText = (option1, option2) => (btn) => {
     if(btn.textContent === option1) {
