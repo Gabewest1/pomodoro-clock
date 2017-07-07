@@ -3,12 +3,13 @@ class Timer {
         this.timer = timer
         this.workTime = workValue
         this.breakTime = breakValue
+        this.state = "work"
         this.timeState = this.workTime
         this.timersSetInterval = undefined
-        this.loadingBar = loadingBar
         this.isPaused = false
-        this.startingTime = 0
         this.skipBreak = false
+        this.percentFinished = 0
+        this.startingTime = 0
 
         this.setTimerHTML(this.workTime)
     }
@@ -16,9 +17,11 @@ class Timer {
         if(this.skipBreak) {
             this.timeState = this.workTime
             this.skipBreak = false
-        } else if(this.timeState === this.workTime) {
+        } else if(this.state === "work") {
+            this.state = "break"
             this.timeState = this.breakTime
-        } else {
+        } else if(this.state === "break") {
+            this.state = "work"
             this.timeState = this.workTime
         }
 
@@ -35,10 +38,10 @@ class Timer {
             }
 
             let timeElapsed = Math.round((Date.now() - this.startingTime) / 1000)
-            let percentFinished = (timeElapsed / this.timeState) * 100
+            this.percentFinished = (timeElapsed / this.timeState) * 100
 
-            if(percentFinished > 100) {
-                percentFinished = 100
+            if(this.percentFinished > 100) {
+                this.percentFinished = 100
                 clearInterval(this.timersSetInterval)
                 this.timersSetInterval = undefined
                 this.handleTimerFinished()
@@ -54,38 +57,28 @@ class Timer {
         this.isPaused = !this.isPaused
     }
     resetTimer() {
+        console.log("TIMESTATE:", this.timeState, this.workTime)
         clearInterval(this.timersSetInterval)
         this.timersSetInterval = undefined
         this.isPaused = false
+        this.timeState = (this.state === "work") ? this.workTime : this.breakTime
         this.setTimerHTML(this.timeState)
     }
     setTimerHTML(time) {
-        if(time === 300) {
-            console.log("TIME:", time, formatTime(time))
-        }
         this.timer.textContent = formatTime(time)
     }
     setWorkTime(time) {
+        console.log("SETTING WORKTIME:", this.workTime, time)
         this.workTime = time
+        if(!this.timersSetInterval && this.state === "work") {
+            this.setTimerHTML(this.workTime)
+        }
     }
     setBreakTime(time) {
+        console.log("SETTING BREAKTIME:", this.breakTime, time)
         this.breakTime = time
-    }
-    handlePauseButtonClick() {
-        this.togglePause()
-    }
-    handleResetButtonClick() {
-        this.resetTimer()
-    }
-    handleSkipBreakButtonClick() {
-        this.skipBreak = !this.skipBreak
-    }
-    handleStartButtonClick() {
-        console.log("STATE:", this.timersSetInterval, this.isPaused)
-        if(!this.timersSetInterval) {
-            this.startTimer()
-        } else if(this.isPaused) {
-            this.togglePause()
+        if(!this.timersSetInterval && this.state === "break") {
+            this.setTimerHTML(this.breakTime)
         }
     }
 }

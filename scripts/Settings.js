@@ -7,10 +7,6 @@ export default class Settings {
         this.goalInput = goalInput
         this.goalValue = goal
 
-        this.workInput.addEventListener("change", (e) => this.handleChange(this.workInput))
-        this.breakInput.addEventListener("change", (e) => this.handleChange(this.breakInput))
-        this.goalInput.addEventListener("change", (e) => this.handleChange(this.goalInput))
-
         this.setInputValue(this.workInput, this.workValue)
         this.setInputValue(this.breakInput, this.breakValue)
         this.setInputValue(this.goalInput, this.goalValue)
@@ -19,31 +15,18 @@ export default class Settings {
         console.log("Manually editing input value:", input, this[input.name + "Value"], input.value)
         this[input.name+"Value"] = input.value
     }
-    incrementWork() {
-        this.workValue++
-        this.setInputValue(this.workInput, this.workValue )
+    increment(input) {
+        console.log("increment",input)
+        this[input.name+"Value"]++
+        this.setInputValue(input, this[input.name+"Value"])
     }
-    incrementBreak() {
-        this.breakValue++
-        this.setInputValue(this.breakInput, this.breakValue )
-    }
-    incrementGoal() {
-        this.goalValue++
-        this.setInputValue(this.goalInput, this.goalValue )
-    }
-    decrementWork() {
-        this.workValue--
-        this.setInputValue(this.workInput, this.workValue )
-    }
-    decrementBreak() {
-        this.breakValue--
-        this.setInputValue(this.breakInput, this.breakValue )
-    }
-    decrementGoal() {
-        this.goalValue--
-        this.setInputValue(this.goalInput, this.goalValue )
+    decrement(input) {
+        console.log("decrement",input)
+        this[input.name+"Value"]--
+        this.setInputValue(input, this[input.name+"Value"])
     }
     setInputValue(input, val) {
+        console.log("Setting input value:", input.value, val)
         input.value = val
     }
 }

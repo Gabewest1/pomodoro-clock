@@ -4,7 +4,8 @@ import Timer from "./Timer"
 import Settings from "./Settings"
 import adjustContainerHeight from "./adjustContainerHeight"
 import setArrowButtonsWidth from "./setArrowButtonsWidth"
-import setSettingsButtonHandlers from "./setSettingsButtonHandlers"
+import setSettingsInputHandlers from "./setSettingsInputHandlers"
+import setArrowButtonHandlers from "./setArrowButtonHandlers"
 
 const $timer = document.querySelector(".clock__timer")
 const $loadingBar = document.querySelector(".loading-bar")
@@ -12,11 +13,13 @@ const $startBtn = document.querySelector(".startBtn")
 const $pauseBtn = document.querySelector(".pauseBtn")
 const $skipBreakBtn = document.querySelector(".skipBtn")
 
+const settings = setSettingsInputHandlers(Settings)
+
 adjustContainerHeight()
 setArrowButtonsWidth()
+setArrowButtonHandlers(settings)
 
-const settings = setSettingsButtonHandlers(Settings)
-const timer = new Timer($timer, $loadingBar, settings)
+const timer = new Timer($timer, $loadingBar, settings.workValue, settings.breakValue)
 const pomodoro = new Pomodoro(timer, settings)
 
 const toggleButtonText = (option1, option2) => (btn) => {
@@ -30,7 +33,6 @@ const toggleStartText = toggleButtonText("Start", "")
 const togglePauseText = toggleButtonText("Reset", "Pause")
 
 let btns = [$startBtn, $pauseBtn, $skipBreakBtn].forEach(btn => {
-    console.log("Attaching button handlers")
     btn.addEventListener("click", (e) => pomodoro.handleButtonClick(e))
 }) 
 
