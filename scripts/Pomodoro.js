@@ -2,10 +2,12 @@ export default class Pomodoro {
     constructor(timer, settings) {
         this.timer = timer
         this.settings = settings
+        this.loadingBar = document.getElementsByClassName("loading-bar")[0]
     }
 
     handleButtonClick(e) {
-        let button = e.target.textContent.toLowerCase()
+        let button = e.target.textContent.toLowerCase().trim()
+        console.log("HANDLEBUTTONCLICK:", button)
         switch(button) {
             case "start": {
                 this.handleStartButtonClick()
@@ -50,11 +52,16 @@ export default class Pomodoro {
                 this.timer.setTimerHTML(timeRemaining)
             }
 
-            // this.loadingBar.style.width = `${percentFinished}%`
+            console.log("PERCENT FINISHED:", this.timer.percentFinished, this.loadingBar)
+            this.loadingBar.style.width = `${this.timer.percentFinished}%`
         }, 1000)
     }
     handleTimerFinished() {
-        document.querySelector(".startBtn").textContent = "Start"
+        const $startBtn = document.querySelector(".startBtn")
+        const $startBtnText = document.querySelector(".startBtn span")
+
+        $startBtn.classList.toggle("active")
+        $startBtnText.textContent = "Start"
         document.querySelector(".pauseBtn").textContent = "Reset"
 
         if(this.timer.state === "break" || (this.timer.state === "work" && this.timer.skipBreak)) {

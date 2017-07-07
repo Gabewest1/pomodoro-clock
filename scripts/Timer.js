@@ -27,6 +27,7 @@ class Timer {
         }
 
         this.isPaused = false
+        this.percentFinished = 0
         this.setTimerHTML(this.timeState)
     }
     startTimer() {
@@ -61,6 +62,7 @@ class Timer {
         clearInterval(this.timersSetInterval)
         this.timersSetInterval = undefined
         this.isPaused = false
+        this.percentFinished = 0
         this.timeState = (this.state === "work") ? this.workTime : this.breakTime
         this.setTimerHTML(this.timeState)
     }
@@ -119,6 +121,8 @@ const formatTime = (time) => {
     const removeLeadingZeros = (time) => time.startsWith("00:") ? removeLeadingZeros(time.substring(3)) : time
 
     formattedTime = removeLeadingZeros(formattedTime)
+
+    if(formattedTime.length <= 2) formattedTime = "00:"+formattedTime
 
     return formattedTime
 }
