@@ -10,6 +10,7 @@ body {
     padding: 0;
     margin: 0;
     font-size: 100%;
+    font-family: Helvetica, Arial, sans-serif
 }
 .flex, .flex--column {
     display: flex;
@@ -66,7 +67,6 @@ body {
     justify-content: center;
     align-items: center;
     font-size: 3em;
-    font-family: helvetica;
 }
 .clock:after {
     content: "";
@@ -92,6 +92,12 @@ body {
   align-items: center;
   
   box-shadow: -3px 4px rgba(66, 66, 66, 1)
+}
+
+.buttons {
+    padding: 0 1em;
+    box-sizing: border-box;
+    width: 100%;
 }
 .buttons > * {
     margin-bottom: 1em;
@@ -145,6 +151,13 @@ body {
 
 .down {
   transform: rotate(45deg);
+}
+
+.rounds {
+    font-size: 2em;
+    font-weight: bolder;
+    color: var(--secondary);
+    text-align: center;
 }
 
 @media (min-width: 768px) {
