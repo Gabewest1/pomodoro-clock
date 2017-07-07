@@ -14,7 +14,7 @@ const $startBtnText = document.querySelector(".startBtn span")
 const $pauseBtn = document.querySelector(".pauseBtn")
 const $skipBreakBtn = document.querySelector(".skipBtn")
 
-const settings = new Settings(5, 10, 5)
+const settings = new Settings(10, 5, 5)
 const timer = new Timer($timer, $loadingBar, settings)
 const pomodoro = new Pomodoro(timer, settings)
 
@@ -60,3 +60,6 @@ $pauseBtn.addEventListener("click", () => {
 $skipBreakBtn.addEventListener("click", () => {
     $skipBreakBtn.classList.toggle("active")
 })
+
+$(".clock__timer").height($(".clock").height())
+$(".clock").fitText(.5)

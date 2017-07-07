@@ -61,12 +61,17 @@ body {
     width: 50%;
     border-radius: 50%;
     border: solid thick var(--secondary);
-    color: #707070;
+    background: var(--primary);
+    color: var(--secondary);
     font-weight: bolder;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 3em;
+}
+.clock__body, .clock__timer {
+    width: 100%;
+    text-align: center;
 }
 .clock:after {
     content: "";
@@ -180,8 +185,6 @@ body {
 }
 
 .startBtn {
-    background: none;
-    border: solid thin var(--secondary);
     position: relative;
 }
 .startBtn span {
@@ -198,6 +201,8 @@ body {
     align-items: center;
 }
 .active, .active:active {
+    background: none;
+    border: solid thin var(--secondary);
     box-shadow: 0 0;
     transform: translateY(4px);
     color: #707070;
@@ -206,6 +211,12 @@ body {
 @media (min-width: 768px) {
     .right-panel {
         flex-direction: row;
+    }
+    .clock {
+        margin: 0 1em;
+    }
+    .buttons {
+        margin-right: 1em;
     }
 }
 
