@@ -213,6 +213,7 @@ body {
         flex-direction: row;
     }
     .clock {
+        width: 100%;
         margin: 0 1em;
     }
     .buttons {
