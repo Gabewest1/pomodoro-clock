@@ -6,16 +6,13 @@ export default class Settings {
 
     }
     handleChange({name, value}) {
-        console.log("AYYY")
         this[name+"Value"] = value
     }
     increment(input) {
-        console.log("increment",input)
         this[input.name+"Value"]++
         input.value = parseInt(input.value)+1
     }
     decrement(input) {
-        console.log("decrement",input)
         this[input.name+"Value"]--
         input.value = parseInt(input.value)-1
     }
