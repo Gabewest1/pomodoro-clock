@@ -58,6 +58,12 @@ class Timer {
     togglePause() {
         this.isPaused = !this.isPaused
     }
+    pauseTimer() {
+        this.isPaused = true
+    }
+    unpauseTimer() {
+        this.isPaused = false
+    }
     resetTimer() {
         clearInterval(this.timersSetInterval)
         this.timersSetInterval = undefined

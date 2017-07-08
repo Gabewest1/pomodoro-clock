@@ -72,6 +72,8 @@ export default class Pomodoro {
         }
 
         this.timer.handleTimerFinished()
+
+        setTimeout(() => this.startTimer(), 2000)
     }
     handleSettingsChange(e) {
         let input = e.target
@@ -89,6 +91,7 @@ export default class Pomodoro {
     }
     handleResetButtonClick() {
         this.timer.resetTimer()
+        this.loadingBar.style.width = 0
     }
     handleSkipBreakButtonClick() {
         this.timer.skipBreak = !this.timer.skipBreak
@@ -98,7 +101,7 @@ export default class Pomodoro {
         if(!this.timer.timersSetInterval) {
             this.startTimer()
         } else if(this.timer.isPaused) {
-            this.timer.togglePause()
+            this.timer.unpauseTimer()
         }
     }
 }
