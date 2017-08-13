@@ -87,7 +87,7 @@ export default class Pomodoro {
         }
     }
     handlePauseButtonClick() {
-        this.timer.togglePause()
+        this.timer.pauseTimer()
     }
     handleResetButtonClick() {
         this.timer.resetTimer()
