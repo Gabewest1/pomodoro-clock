@@ -60,7 +60,7 @@ export default class Pomodoro {
         const $startBtn = document.querySelector(".startBtn")
         const $startBtnText = document.querySelector(".startBtn span")
 
-        $startBtn.classList.toggle("active")
+        $startBtn.classList.remove("active")
         $startBtnText.textContent = "Start"
         document.querySelector(".pauseBtn").textContent = "Reset"
 
@@ -71,6 +71,10 @@ export default class Pomodoro {
             rounds.textContent = rounds.textContent.replace(roundsCompleted, `${1 + parseInt(roundsCompleted)}`)
         }
 
+        this.loadingBar.style.transition = "none"
+        this.loadingBar.style.width = 0
+        this.loadingBar.style.transition = "all .5s linear" //Get this from its style-sheet
+        
         this.timer.handleTimerFinished()
 
         setTimeout(() => this.startTimer(), 2000)
