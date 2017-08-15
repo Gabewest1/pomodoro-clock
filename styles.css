@@ -228,3 +228,7 @@ body {
         width: 80%;
     }
 }
+
+@keyframes clock {
+    to { border-color: indianred; color: indianred; }
+}
