@@ -23,43 +23,9 @@ adjustContainerHeight()
 setArrowButtonsWidth()
 setArrowButtonHandlers(pomodoro)
 
-const toggleButtonText = (option1, option2) => (btn) => {
-    let text = btn.textContent.trim()
-    if(text === option1) {
-        btn.textContent = option2
-    } else {
-        btn.textContent = option1        
-    }
-}
-
-const toggleStartText = toggleButtonText("Start", "")
-const togglePauseText = toggleButtonText("Reset", "Pause")
-
 let btns = [$startBtn, $pauseBtn, $skipBreakBtn].forEach(btn => {
     btn.addEventListener("click", (e) => pomodoro.handleButtonClick(e))
 }) 
-
-$startBtn.addEventListener("click", () => {
-    if($startBtnText.textContent === "")
-        return
-    
-    console.log("toggling text")
-    toggleStartText($startBtnText)
-    togglePauseText($pauseBtn)
-    $startBtn.classList.toggle("active")
-})
-
-$pauseBtn.addEventListener("click", () => {
-    if($pauseBtn.textContent === "Pause") {
-        toggleStartText($startBtnText)
-        togglePauseText($pauseBtn)
-        $startBtn.classList.toggle("active")    
-    }
-})
-
-$skipBreakBtn.addEventListener("click", () => {
-    $skipBreakBtn.classList.toggle("active")
-})
 
 $(".clock__timer").height($(".clock").height())
 $(".clock").fitText(.5)
