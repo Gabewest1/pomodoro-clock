@@ -5,6 +5,8 @@ export default class Pomodoro {
         this.loadingBar = document.getElementsByClassName("loading-bar")[0]
         this.startBtn = document.querySelector(".startBtn")
         this.startBtnText = document.querySelector(".startBtn span")
+        this.pauseAndResetBtn = document.querySelector(".pauseBtn")
+        this.skipAndContinueBtn = document.querySelector(".skipBtn")
     }
 
     handleButtonClick(e) {
@@ -17,6 +19,12 @@ export default class Pomodoro {
             }
             case "pause": {
                 this.handlePauseButtonClick()
+                break
+            }
+            case "continue": {
+                this.timer.unpauseTimer()
+                this.skipAndContinueBtn.textContent = "Skip break"
+                this.pauseAndResetBtn.textContent = "Pause"
                 break
             }
             case "skip break": {
@@ -35,6 +43,10 @@ export default class Pomodoro {
         console.log('STARTING TIMER')
         this.startBtn.classList.add("active")        
         this.startBtnText.textContent = ""
+
+        this.pauseAndResetBtn.textContent = "Pause"
+
+        this.skipAndContinueBtn.textContent = "Skip break"
 
         this.timer.startingTime = Date.now()
         this.timer.timeState = (this.timer.state === "work") ? this.timer.workTime : this.timer.breakTime
@@ -80,7 +92,7 @@ export default class Pomodoro {
 
         this.timer.handleTimerFinished()
 
-        setTimeout(() => this.startTimer(), 2000)
+        setTimeout(() => this.handleStartButtonClick(), 2000)
     }
     handleSettingsChange(e) {
         let input = e.target
@@ -95,10 +107,15 @@ export default class Pomodoro {
     }
     handlePauseButtonClick() {
         this.timer.pauseTimer()
+        this.pauseAndResetBtn.textContent = "Reset"
+        this.skipAndContinueBtn.textContent = "Continue"
     }
     handleResetButtonClick() {
         this.timer.resetTimer()
         this.loadingBar.style.width = 0
+        this.skipAndContinueBtn.textContent = "Skip break"
+        this.startBtn.classList.remove("active")
+        this.startBtnText.textContent = "Start"
     }
     handleSkipBreakButtonClick() {
         this.timer.skipBreak = !this.timer.skipBreak
