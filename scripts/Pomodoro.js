@@ -3,6 +3,8 @@ export default class Pomodoro {
         this.timer = timer
         this.settings = settings
         this.loadingBar = document.getElementsByClassName("loading-bar")[0]
+        this.startBtn = document.querySelector(".startBtn")
+        this.startBtnText = document.querySelector(".startBtn span")
     }
 
     handleButtonClick(e) {
@@ -30,6 +32,10 @@ export default class Pomodoro {
         }
     }
     startTimer() {
+        console.log('STARTING TIMER')
+        this.startBtn.classList.add("active")        
+        this.startBtnText.textContent = ""
+
         this.timer.startingTime = Date.now()
         this.timer.timeState = (this.timer.state === "work") ? this.timer.workTime : this.timer.breakTime
 
@@ -57,11 +63,8 @@ export default class Pomodoro {
         }, 1000)
     }
     handleTimerFinished() {
-        const $startBtn = document.querySelector(".startBtn")
-        const $startBtnText = document.querySelector(".startBtn span")
-
-        $startBtn.classList.remove("active")
-        $startBtnText.textContent = "Start"
+        this.startBtn.classList.remove("active")
+        this.startBtnText.textContent = "Start"
         document.querySelector(".pauseBtn").textContent = "Reset"
 
         if(this.timer.state === "break" || (this.timer.state === "work" && this.timer.skipBreak)) {
@@ -74,7 +77,7 @@ export default class Pomodoro {
         this.loadingBar.style.transition = "none"
         this.loadingBar.style.width = 0
         this.loadingBar.style.transition = "all .5s linear" //Get this from its style-sheet
-        
+
         this.timer.handleTimerFinished()
 
         setTimeout(() => this.startTimer(), 2000)
