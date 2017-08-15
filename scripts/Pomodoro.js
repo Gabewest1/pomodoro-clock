@@ -2,11 +2,16 @@ export default class Pomodoro {
     constructor(timer, settings) {
         this.timer = timer
         this.settings = settings
+        this.clock = document.querySelector(".clock")
         this.loadingBar = document.getElementsByClassName("loading-bar")[0]
         this.startBtn = document.querySelector(".startBtn")
         this.startBtnText = document.querySelector(".startBtn span")
         this.pauseAndResetBtn = document.querySelector(".pauseBtn")
         this.skipAndContinueBtn = document.querySelector(".skipBtn")
+        this.alarmAudio = new Audio("../assets/electronic_beeping_alarm_clock.mp3")
+        this.tickAudio = new Audio("../assets/electronic_alarm_clock_beep.mp3")
+        this.alarmAudio.volume = .5
+        this.tickAudio.volume = .5
     }
 
     handleButtonClick(e) {
@@ -57,27 +62,28 @@ export default class Pomodoro {
                 return
             }
 
+            this.tickAudio.play()
             let timeElapsed = Math.round((Date.now() - this.timer.startingTime) / 1000)
             this.timer.percentFinished = (timeElapsed / this.timer.timeState) * 100
+            let timeRemaining = this.timer.timeState - timeElapsed
+            this.timer.setTimerHTML(timeRemaining)
+            console.log("PERCENT FINISHED:", this.timer.percentFinished, this.loadingBar)
+            this.loadingBar.style.width = `${this.timer.percentFinished}%`
 
             if(this.timer.percentFinished > 100) {
                 this.timer.percentFinished = 100
                 clearInterval(this.timer.timersSetInterval)
                 this.timer.timersSetInterval = undefined
                 this.handleTimerFinished()
-            } else {
-                let timeRemaining = this.timer.timeState - timeElapsed
-                this.timer.setTimerHTML(timeRemaining)
             }
-
-            console.log("PERCENT FINISHED:", this.timer.percentFinished, this.loadingBar)
-            this.loadingBar.style.width = `${this.timer.percentFinished}%`
         }, 1000)
     }
     handleTimerFinished() {
+        this.alarmAudio.play()
+        this.clock.style.animation = "clock .2s linear infinite"
         this.startBtn.classList.remove("active")
         this.startBtnText.textContent = "Start"
-        document.querySelector(".pauseBtn").textContent = "Reset"
+        this.pauseAndResetBtn.textContent = "Reset"
 
         if(this.timer.state === "break" || (this.timer.state === "work" && this.timer.skipBreak)) {
             let rounds = document.querySelector(".rounds")
@@ -90,8 +96,10 @@ export default class Pomodoro {
         this.loadingBar.style.width = 0
         this.loadingBar.style.transition = "all .5s linear" //Get this from its style-sheet
 
-        this.timer.handleTimerFinished()
-
+        setTimeout(() => {
+            this.timer.handleTimerFinished()
+            this.clock.style.animation = "none"
+        }, 2000)
         setTimeout(() => this.handleStartButtonClick(), 2000)
     }
     handleSettingsChange(e) {
