@@ -1,4 +1,9 @@
 export default () => {
+    adjustContainerHeight()
+    window.addEventListener("resize", adjustContainerHeight)
+}
+
+function adjustContainerHeight() {
     console.log("adjusting height")
     const container = document.querySelector(".container")
     const distanceFromTopOfWindow = getSiblings(container).reduce((sum, next) => sum + getHeight(next), 0)
