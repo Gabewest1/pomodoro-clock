@@ -13,9 +13,7 @@ export default class Pomodoro {
         this.skipAndContinueBtn = document.querySelector(".skipBtn")
         this.alarmAudio = AlarmAudio
         this.tickAudio = TickAudio
-        this.alarmAudio.volume = .5
-        this.tickAudio.volume = .5
-    }
+   }
 
     handleButtonClick(e) {
         let button = e.target.textContent.toLowerCase().trim()
