@@ -1,3 +1,6 @@
+import TickAudio from "./TickAudio"
+import AlarmAudio from "./AlarmAudio"
+
 export default class Pomodoro {
     constructor(timer, settings) {
         this.timer = timer
@@ -8,8 +11,8 @@ export default class Pomodoro {
         this.startBtnText = document.querySelector(".startBtn span")
         this.pauseAndResetBtn = document.querySelector(".pauseBtn")
         this.skipAndContinueBtn = document.querySelector(".skipBtn")
-        this.alarmAudio = new Audio("../assets/electronic_beeping_alarm_clock.mp3")
-        this.tickAudio = new Audio("../assets/electronic_alarm_clock_beep.mp3")
+        this.alarmAudio = AlarmAudio
+        this.tickAudio = TickAudio
         this.alarmAudio.volume = .5
         this.tickAudio.volume = .5
     }
