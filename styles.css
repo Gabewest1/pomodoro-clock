@@ -119,6 +119,12 @@ body {
   text-align: center;
 }
 
+#muteBtn {
+    height: 35px;
+    width: 35px;
+    align-self: flex-end;
+}
+
 .arrows {
   position: relative;
   border-radius: 5px;
