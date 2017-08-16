@@ -6,6 +6,7 @@ import adjustContainerHeight from "./adjustContainerHeight"
 import setArrowButtonsWidth from "./setArrowButtonsWidth"
 import setSettingsInputHandlers from "./setSettingsInputHandlers"
 import setArrowButtonHandlers from "./setArrowButtonHandlers"
+import setupMuteButton from "./setupMuteButton"
 
 const $timer = document.querySelector(".clock__timer")
 const $loadingBar = document.querySelector(".loading-bar")
@@ -22,6 +23,7 @@ setSettingsInputHandlers(pomodoro)
 adjustContainerHeight()
 setArrowButtonsWidth()
 setArrowButtonHandlers(pomodoro)
+setupMuteButton()
 
 let btns = [$startBtn, $pauseBtn, $skipBreakBtn].forEach(btn => {
     btn.addEventListener("click", (e) => pomodoro.handleButtonClick(e))
