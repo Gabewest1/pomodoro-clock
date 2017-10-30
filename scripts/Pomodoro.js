@@ -128,6 +128,7 @@ export default class Pomodoro {
     }
     handleSkipBreakButtonClick() {
         this.timer.skipBreak = !this.timer.skipBreak
+        this.skipAndContinueBtn.classList.toggle("active")
     }
     handleStartButtonClick() {
         console.log("STATE:", this.timer.timersSetInterval, this.timer.isPaused)

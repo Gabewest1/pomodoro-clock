@@ -186,12 +186,25 @@ body {
     text-align: center;
 }
 
+.skipBtn.active {
+    box-shadow: 0 2px #666;
+    transform: translateY(4px);
+}
+
 .startBtn {
     position: relative;
 }
 .startBtn span {
     z-index: 1;
 }
+.startBtn.active {
+    background: none;
+    border: solid thin var(--secondary);
+    box-shadow: 0 0;
+    transform: translateY(4px);
+    color: #707070;
+}
+
 .loading-bar {
     background: var(--settingsBtnBg);
     height: 100%;
@@ -202,13 +215,6 @@ body {
     justify-content: center;
     align-items: center;
     transition: all .5s linear;
-}
-.active, .active:active {
-    background: none;
-    border: solid thin var(--secondary);
-    box-shadow: 0 0;
-    transform: translateY(4px);
-    color: #707070;
 }
 
 @media (min-width: 768px) {
