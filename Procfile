@@ -1,1 +1,1 @@
-web: start index.html
+web: node server
