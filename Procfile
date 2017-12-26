@@ -1,1 +1,1 @@
-web: webpack-dev-server
+web: start index.html

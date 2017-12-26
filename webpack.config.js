@@ -3,7 +3,7 @@ let path = require("path")
 module.exports = {
     entry: ["./scripts/index.js"],
     output: {
-        path: "/",
+        path: "C:\\Users\\Dell\\Desktop\\dev\\pomodoro-clock\\",
         filename: "bundle.js"
     },
     module: {
