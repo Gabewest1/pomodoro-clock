@@ -72,7 +72,7 @@ let TickAudio
 
 if (!TickAudio) {
     console.log("AYYYYY ONLY ONCE")
-    TickAudio = new Audio("../assets/electronic_alarm_clock_beep.mp3")
+    TickAudio = new Audio("/assets/electronic_alarm_clock_beep.mp3")
     TickAudio.volume = .5
 }
 
@@ -88,7 +88,7 @@ let AlarmAudio
 
 if (!AlarmAudio) {
     console.log("I WANT TO SEE MYSELF ONLY ONCE")
-    AlarmAudio = new Audio("../assets/electronic_beeping_alarm_clock.mp3")
+    AlarmAudio = new Audio("/assets/electronic_beeping_alarm_clock.mp3")
     AlarmAudio.playbackRate = .5
     AlarmAudio.volume = .5
 }
@@ -894,8 +894,8 @@ class Pomodoro {
 class Timer {
     constructor(timer, loadingBar, settings) {
         this.timer = timer
-        this.workTime = settings.workValue
-        this.breakTime = settings.breakValue
+        this.workTime = settings.workValue * 60
+        this.breakTime = settings.breakValue * 60
         this.state = "work"
         this.timeState = this.workTime
         this.timersSetInterval = undefined
