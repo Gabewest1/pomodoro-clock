@@ -1,8 +1,8 @@
 class Timer {
     constructor(timer, loadingBar, settings) {
         this.timer = timer
-        this.workTime = settings.workValue
-        this.breakTime = settings.breakValue
+        this.workTime = settings.workValue * 60
+        this.breakTime = settings.breakValue * 60
         this.state = "work"
         this.timeState = this.workTime
         this.timersSetInterval = undefined
