@@ -3,11 +3,11 @@ const path = require("path")
 const PORT = process.env.PORT || 3000
 const app = express()
 
-app.use(express.static(path.resolve(__dirname, "assets")))
-app.use("/bundle.js", (req, res) => {
+app.use(express.static(path.resolve(__dirname)))
+app.get("/bundle.js", (req, res) => {
     res.sendFile(path.resolve(__dirname, "bundle.js"))
 })
-app.use("/", (req, res) =>{
+app.get("/", (req, res) =>{
     res.sendFile(__dirname + "/index.html")
 })
 
