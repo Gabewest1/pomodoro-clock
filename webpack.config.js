@@ -28,5 +28,11 @@ module.exports = {
             }
         ]
     },
+    proxy: {
+        '/': {
+          target: 'https://pomodor-clock.herokuapp.com/',
+          secure: false
+        }
+      }
 }
 
